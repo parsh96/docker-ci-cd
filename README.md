@@ -132,5 +132,5 @@ This is a small and just one of the examples of how powerful Docker could be in 
   * For the purpose of demonstration I have used GitHub, you can host your code practically anywhere else as long your CI/CD tools allows receiving notification or polling. 
   * For the purpose of Demonstration I have used Docker Trusted Registry but you can use any other repository as well e.g. dockerhub
   * For the purpose of demonstration I have used Jenkins but you can also use any other CI tool or build and deployment tool
-  * For the purpose of demo I have used HRM (and also becuase I found it easy to use) but you can also use other proxy feature/tool on top of Docker setup e.g. interlock. Or hey, build something of your own ;-)
-  e.g. You can also use S3 bucket to host the code and use a Lambda function to invoke CI pipeline using rest service offered by your CI tool to perform a build and push the image to your public repository on DockerHub which can be consumed by your end users when they need it.
+  * For the purpose of demo I have used HRM (and also becuase I found it easy to use) but you can also use other proxy feature/tool on top of Docker setup e.g. interlock. 
+  * Or hey, build something of your own ;-)  e.g. You can also use S3 bucket to host the code and use a Lambda function to invoke CI pipeline using rest service offered by your CI tool to perform a build and push the image to your public repository on DockerHub which can be consumed by your end users when they need it.
