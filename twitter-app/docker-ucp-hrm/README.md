@@ -63,7 +63,7 @@ Refer to the diagram [continuous-deployment-jenkins-and-docker-trusted-reg.png](
 Use ssh method to do the build. Use below commands
 
 ### First we need to let our docker client talk to UCP (our orchestrator)
-** Download the Client Bundle from your UCP
+  * Download the Client Bundle from your UCP
 
 ```
 cd /home/centos/ucp-bundle
@@ -71,7 +71,7 @@ eval $(<env.sh)
 cd $WORKSPACE
 ```
 
-** Now perform a build and push to the dtr
+  * Now perform a build and push to the dtr
 ```
 docker build --pull=true -t dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT ./twitter-app/docker-ucp-hrm/code
 
@@ -79,7 +79,7 @@ docker login --username user --password myComplexPa$$w0rd dtr.example.com:12443/
 
 docker push dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT
 ```
-** Upate the service
+  * Update the service
 ```
 docker service update --force --update-parallelism 1 --update-delay 30s --image dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT tweet-to-us 
 ```
