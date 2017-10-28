@@ -101,18 +101,18 @@ cd $WORKSPACE
 
   * Now perform a build and push to the dtr
 ```
-docker build --pull=true -t dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT ./twitter-app/docker-ucp-hrm/code
+docker build --pull=true -t dtr.example.com:12443/sameer/twitter-app-ci-cd:$GIT_COMMIT ./code
 
-docker login --username user --password myComplexPa$$w0rd dtr.example.com:12443/myrepo
+docker login --username user --password myComplexPa$$w0rd dtr.example.com:12443/sameer
 
-docker push dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT
+docker push dtr.example.com:12443/sameer/twitter-app-ci-cd:$GIT_COMMIT
 ```
   * Update the service
   
   You can skip this step if you don't want to do continuous deployments.
   
 ```
-docker service update --force --update-parallelism 1 --update-delay 30s --image dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT tweet-to-us 
+docker service update --force --update-parallelism 1 --update-delay 30s --image dtr.example.com:12443/sameer/twitter-app-ci-cd:$GIT_COMMIT tweet-to-us 
 ```
 # Docker and DevOps
 This is a small and just one of the examples of how powerful Docker could be in your DevOps culture
