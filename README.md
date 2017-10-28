@@ -54,13 +54,11 @@ Value = ```external_route=http://tweet.app.example.com/,internal_port=80```
 
 ## Make a change and roll to production - Rolling Update
 
-Make changes and rebuild
-```
-vi index.html
-```
+Make changes to ```index.html``` and rebuild.
+
 Once the changes are done then build again and push to DTR repo
 ```
-docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/sameer/tweet-to-us-hrm:$gitCheckinHash .
+docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/sameer/tweet-to-us-hrm:b2 .
 docker push dtr.example.com:12443/sameer/tweet-to-us-hrm:b2
 ```
 ## Update the service
@@ -68,7 +66,7 @@ docker push dtr.example.com:12443/sameer/tweet-to-us-hrm:b2
 docker service update --image dtr.example.com:12443/sameer/tweet-to-us-hrm:b2 tweet-to-us
 ```
 
-This time you would see a different message.
+This time you would see a different message as per your edit.
 
 
 ## Rollback
