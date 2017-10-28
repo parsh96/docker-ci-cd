@@ -8,7 +8,7 @@ e.g.
 
 (*)Login if needed
 
-docker login dtr.example.com:12443/myrepo --username ashnik --password password
+docker login dtr.example.com:12443/myrepo --username user --password MyComplexPa$$w0rd
 
 docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/myrepo/tweet-to-us-hrm:latest .
      
@@ -36,10 +36,8 @@ cp  index-with-mistake.html index.html
 
 docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/myrepo/tweet-to-us-hrm:$gitCheckinHash .
 
-docker push dtr.example.com:12443/myrepo/tweet-to-us-hrm:$gitCheckinHash
 
-
-Update the service
+## Update the service
 
 docker service update --image dtr.example.com:12443/myrepo/tweet-to-us-hrm:$gitCheckinHash2 tweet-to-us
 
@@ -50,3 +48,34 @@ This time you would see a different message.
 ## Rollback
 
  docker service update --rollback   tweet-to-us
+
+
+## Continuous Integration
+Refer to the pdf - GitHub-Jenkins-Integration.pdf which gives details of how you can create a Webhook in GitHub repo which can send a notification to your CI Server (Jenkins in this case) to trigger a build on every new change in the repo.
+
+## Continuous Deployment
+Refer to the diagram continuous-deployment-jenkins-and-docker-trusted-reg.png to get an idea of how you can setup Jenkins to do an automated build and deploy the newly built image.
+
+## Jenkins Build Configuration
+Use ssh method to do the build. Use below commands
+
+# First we need to let our docker client talk to UCP (our orchestrator)
+(*) Download the Client Bundle from your UCP 
+
+cd /home/centos/ucp-bundle
+eval $(<env.sh)
+cd $WORKSPACE
+
+(*) Now perform a build and push to the dtr
+
+docker build --pull=true -t dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT ./twitter-app/docker-ucp-hrm/code
+
+docker login --username user --password myComplexPa$$w0rd dtr.example.com:12443/myrepo
+
+docker push dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT
+
+(*) Upate the service
+docker service update --force --update-parallelism 1 --update-delay 30s --image dtr.example.com:12443/myrepo/twitter-app-ci-cd:$GIT_COMMIT tweet-to-us 
+
+
+docker push dtr.example.com:12443/myrepo/tweet-to-us-hrm:$gitCheckinHash
