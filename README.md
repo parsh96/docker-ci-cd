@@ -24,29 +24,33 @@ As you can see in the diagram the you don't need to expose different ports and a
 
 Build the image using below command
 
+```
 docker image build -t $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1 .
 docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
+```
 e.g.
 
-(*)Login if needed
-
+```
+##Login if needed
 docker login dtr.example.com:12443/sameer --username user --password MyComplexPa$$w0rd
-
+```
+```
 docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/sameer/tweet-to-us-hrm:b1 .
-     
 docker push dtr.example.com:12443/sameer/tweet-to-us-hrm:b1
-
+```
 build-arg will help to run this only on a Linux machine if your UCP cluster has Windows and Linux worker nodes
 
 ## Pull and run a service with HRM 
 
+```
 docker service create --network ucp-hrm --name tweet-to-us --mode replicated --replicas 2 --label com.docker.ucp.mesh.http.80="external_route=http://tweet.app.example.com/,internal_port=80" --constraint 'node.platform.os==linux' dtr.example.com:12443/sameer/tweet-to-us-hrm:b1
+```
 
 You can also do this from the UCP
 
 Make sure that you go to Environment Tab and enter the Label
-Key = com.docker.ucp.mesh.http.80
-Value = external_route=http://tweet.app.example.com/,internal_port=80
+Key = ```com.docker.ucp.mesh.http.80```
+Value = ```external_route=http://tweet.app.example.com/,internal_port=80```
 
 ## Make a change and roll to production - Rolling Update
 
@@ -118,3 +122,10 @@ docker service update --force --update-parallelism 1 --update-delay 30s --image 
 This is a small and just one of the examples of how powerful Docker could be in your DevOps culture
 
 ![DevOps](https://github.com/sameerkasi200x/docker-ci-cd/blob/master/1280px-Devops-toolchain.svg%5B1%5D.png?raw=true)
+
+# Alternatives
+  * For the purpose of demonstration I have used GitHub, you can host your code practically anywhere else as long your CI/CD tools allows receiving notification or polling. 
+  * For the purpose of Demonstration I have used Docker Trusted Registry but you can use any other repository as well e.g. dockerhub
+  * For the purpose of demonstration I have used Jenkins but you can also use any other CI tool or build and deployment tool
+  * For the purpose of demo I have used HRM (and also becuase I found it easy to use) but you can also use other proxy feature/tool on top of Docker setup e.g. interlock. Or hey, build something of your own ;-)
+  e.g. You can also use S3 bucket to host the code and use a Lambda function to invoke CI pipeline using rest service offered by your CI tool to perform a build and push the image to your public repository on DockerHub which can be consumed by your end users when they need it.
