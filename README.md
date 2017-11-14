@@ -120,6 +120,7 @@ The option ```--update-parallelism 1``` helps to update one instance of the cont
 
 The option ```--update-delay``` helps you to have a delay in between the update of containers that way one of the underlying containers/tasks could be using old code and another one would be using new code. This (if you keep the delay long enough) can help in doing blue-green deployment to test the new code without impacting all the users.
 
+
 Refer online doc for mode option - [docker service update](https://docs.docker.com/engine/reference/commandline/service_update/)
 
 
