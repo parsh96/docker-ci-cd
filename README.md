@@ -41,7 +41,7 @@ e.g.
 
 	docker push dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1
 
-build-arg will help to run this only on a Linux machine if your UCP cluster has Windows and Linux worker nodes
+>```build-arg``` will help to run this only on a Linux machine if your UCP cluster has Windows and Linux worker nodes
 
 ### Pull and run a service with HRM 
 
@@ -81,7 +81,7 @@ This time you would see a different message as per your edit.
 
 
 # Continuous Integration
-Refer to the pdf - [GitHub-Jenkins-Integration.pdf](https://www.docker.com/sites/default/files/UseCase/RA_CI%20with%20Docker_08.25.2015.pdf) which gives details of how you can create a Webhook in GitHub repo which can send a notification to your CI Server (Jenkins in this case) to trigger a build on every new change in the repo. The diagram below depicts the flow of events. 
+Refer to the pdf - [GitHub-Jenkins-Integration.pdf](https://www.docker.com/sites/default/files/UseCase/RA_CI%20with%20Docker_08.25.2015.pdf) which gives details of how you can create a Webhook in GitHub repo which can send a notification to your CI Server (Jenkins in this case) to trigger a Docker based build on every new change in the repo. The diagram below depicts the flow of events. 
 
 <img src="https://github.com/sameerkasi200x/docker-ci-cd/blob/master/continuous-integration-jenkins-and-docker-trusted-reg.png?raw=true"  alt="Jenkins - GitHub - Docker integration" width="800" />
 
@@ -107,6 +107,8 @@ Use ssh method to do the build. Set up your Jenkins build using below steps and 
 	> In my Example the client bundle is placed under ```/home/centos/ucp-bundle```. Make sure that this directory is acceesible by the user which is being used by Jenkins Master to connect to your Jenkins slave
 	> 
 	> ```WORKSPACE``` will translate into Jenkins workspace
+
+	You can follow the online Docker documentation to understand [how to download Client Bundle](https://docs.docker.com/datacenter/ucp/2.2/guides/user/access-ucp/cli-based-access/#download-client-certificates). 
 
   * Now perform a build and push to the dtr
   
@@ -144,7 +146,6 @@ This is a small and just one of the examples of how powerful Docker could be in 
 
 
 <img src="https://github.com/sameerkasi200x/docker-ci-cd/blob/master/1280px-Devops-toolchain.svg%5B1%5D.png?raw=true"  alt="DevOps" width="600" />
-
 
 
 # Alternatives
