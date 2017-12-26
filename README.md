@@ -20,60 +20,59 @@ A schematic explanation of HTTP Routing Mesh is as described in the diagram - [h
 
 As you can see in the diagram the you don't need to expose different ports and all traffic is routed via http ports.
 
-## Build and push
+### Build and push
 
 Build the image using below command
 
-```
-docker image build -t $dtr-url/$dtr-RepoOwner/tweet-to-us:docker-ucp-hrm-b1 .
-docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
-```
+
+	docker image build -t $dtr-url/$dtr-RepoOwner/tweet-to-us:docker-ucp-hrm-b1 .
+	docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
+
 e.g.
 
-```
-##Login if needed
-docker login dtr.example.com:12443/RepoOwner --username user --password MyComplexPa$$w0rd
-```
-```
-docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1 .
-docker push dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1
-```
+
+###Login if needed
+	docker login dtr.example.com:12443/RepoOwner --username user --password MyComplexPa$$w0rd
+	docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1 .
+	docker push dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1
+
 build-arg will help to run this only on a Linux machine if your UCP cluster has Windows and Linux worker nodes
 
-## Pull and run a service with HRM 
+### Pull and run a service with HRM 
 
-```
-docker service create --network ucp-hrm --name tweet-to-us --mode replicated --replicas 2 --label com.docker.ucp.mesh.http.80="external_route=http://tweet.app.example.com/,internal_port=80" --constraint 'node.platform.os==linux' dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1
-```
+
+	docker service create --network ucp-hrm --name tweet-to-us --mode replicated --replicas 2 --label com.docker.ucp.mesh.http.80="external_route=http://tweet.app.example.com/,internal_port=80" --constraint 'node.platform.os==linux' dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1
+
 
 You can also do this from the UCP
 
 Make sure that you go to Environment Tab and enter the Label
-Key = ```com.docker.ucp.mesh.http.80```
-Value = ```external_route=http://tweet.app.example.com/,internal_port=80```
 
-## Make a change and roll to production - Rolling Update
+>Key = ```com.docker.ucp.mesh.http.80```
+
+>Value = ```external_route=http://tweet.app.example.com/,internal_port=80```
+
+### Make a change and roll to production - Rolling Update
 
 Make changes to ```index.html``` and rebuild.
 
 Once the changes are done then build again and push to DTR repo
-```
-docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2 .
-docker push dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2
-```
-## Update the service
-```
-docker service update --image dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2 tweet-to-us
-```
+
+	docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2 .
+	docker push dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2
+
+### Update the service
+
+	docker service update --image dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2 tweet-to-us
+
 
 This time you would see a different message as per your edit.
 
 
-## Rollback
+### Rollback
 
-```
-docker service update --rollback   tweet-to-us
-```
+	docker service update --rollback   tweet-to-us
+
 
 # Continuous Integration
 Refer to the pdf - [GitHub-Jenkins-Integration.pdf](GitHub-Jenkins-Integration.pdf) which gives details of how you can create a Webhook in GitHub repo which can send a notification to your CI Server (Jenkins in this case) to trigger a build on every new change in the repo.
@@ -95,27 +94,25 @@ Use ssh method to do the build. Use below commands
 ### First we need to let our docker client talk to UCP (our orchestrator)
   * Download the Client Bundle from your UCP
 
-```
-cd /home/centos/ucp-bundle
-eval $(<env.sh)
-cd $WORKSPACE
-```
+		cd /home/centos/ucp-bundle
+		eval $(<env.sh)
+		cd $WORKSPACE
+
 
   * Now perform a build and push to the dtr
-```
-docker build --pull=true -t dtr.example.com:12443/RepoOwner/twitter-app-ci-cd:$GIT_COMMIT ./code
+  
+		docker build --pull=true -t dtr.example.com:12443/RepoOwner/twitter-app-ci-cd:$GIT_COMMIT ./code
 
-docker login --username user --password myComplexPa$$w0rd dtr.example.com:12443/RepoOwner
+		docker login --username user --password myComplexPa$$w0rd dtr.example.com:12443/RepoOwner
 
-docker push dtr.example.com:12443/RepoOwner/twitter-app-ci-cd:$GIT_COMMIT
-```
+		docker push dtr.example.com:12443/RepoOwner/twitter-app-ci-cd:$GIT_COMMIT
+
   * Update the service
   
-  You can skip this step if you don't want to do continuous deployments.
+  	You can skip this step if you don't want to do continuous deployments.
   
-```
-docker service update --force --update-parallelism 1 --update-delay 30s --image dtr.example.com:12443/RepoOwner/twitter-app-ci-cd:$GIT_COMMIT tweet-to-us 
-```
+		docker service update --force --update-parallelism 1 --update-delay 30s --image dtr.example.com:12443/RepoOwner/twitter-app-ci-cd:$GIT_COMMIT tweet-to-us 
+
 The option ```--update-parallelism 1``` helps to update one instance of the container at a time. This is specially helpful when you are running your service in replicated mode with replicas of the same container. That way you won't notice a downtime for your service as upgrade will be rolled to all containers one by one. 
 
 The option ```--update-delay``` helps you to have a delay in between the update of containers that way one of the underlying containers/tasks could be using old code and another one would be using new code. This (if you keep the delay long enough) can help in doing blue-green deployment to test the new code without impacting all the users.
