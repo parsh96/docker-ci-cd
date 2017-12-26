@@ -30,20 +30,28 @@ A schematic explanation of HTTP Routing Mesh is as described in the below diagra
 
 As you can see in the diagram the you don't need to expose different ports and all traffic is routed via http ports.
 
+
+# Docker Build and Deployment
+
+Now that we have understood the concept of Swarm Routing Mesh and HTT Routing Mesh, let's look the docker commands which will be useful for performing a Docker based build and deployment for a given application.
+
+
 ### Build and push
 
-Build the image using below command
+  * Use ```docker image build``` command to build an image using the latest code from code repoistory
 
 
-	docker image build -t $dtr-url/$dtr-RepoOwner/tweet-to-us:docker-ucp-hrm-b1 .
+		docker image build -t $dtr-url/$dtr-RepoOwner/tweet-to-us:docker-ucp-hrm-b1 .
+  * Use ```docker push``` command to push an image to DTR
 
-	docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
+		docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
 	
-> The ```twitter-app-ci-cd``` repository should exist in advance
-e.g.
+	> The ```twitter-app-ci-cd``` repository should exist in advance
+	> The ```$dtr-url``` is the URL which points to DTR
+	>  ```$dtr-RepoOwner```` under whom the repostiory twitter-app-ci-cd been placed  
 
 
-###Login if needed
+### Login if needed
 	docker login dtr.example.com:12443/RepoOwner --username user --password MyComplexPa$$w0rd
 
 	docker image build --build-arg 'constraint:ostype==linux' -t dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1 .
@@ -58,15 +66,13 @@ e.g.
 	docker service create --network ucp-hrm --name tweet-to-us --mode replicated --replicas 2 --label com.docker.ucp.mesh.http.80="external_route=http://tweet.app.example.com/,internal_port=80" --constraint 'node.platform.os==linux' dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1
 
 
-You can also do this from the UCP
-
-Make sure that you go to Environment Tab and enter the Label
+You can also do deployments from from the UCP portal/GUI. When you do a deployment from GUI, you can still provide the HRM configuration label. IN order to do so, make sure that you go to Environment Tab and enter the Label
 
 >Key = ```com.docker.ucp.mesh.http.80```
 >
 >Value = ```external_route=http://tweet.app.example.com/,internal_port=80```
 
-### Make a change and roll to production - Rolling Update
+### Make a change and roll to production 
 
 Make changes to ```index.html``` and rebuild.
 
@@ -76,7 +82,7 @@ Once the changes are done then build again and push to DTR repo
 
 	docker push dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2
 
-### Update the service
+### Update the service - Rolling Update
 
 	docker service update --image dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b2 tweet-to-us
 
