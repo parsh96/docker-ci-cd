@@ -1,6 +1,6 @@
 # Using UCP HRM for rolling upgrade
-This example uses a simple html file and nginx image to demonstrate how you can 
-  * Use the HTTP Routing Mesh (HRM) feature of UCP
+This post demonstrates how you can use Docker Enterprise Edition for CI/CD and rolling upgrade. The post uses a simple html file and nginx image to explain and demonstrate how you can   
+  * Use HTTP Routing Mesh (HRM) feature of UCP
   * Use HRM for rolling upgrade
   * Use Jenkins and Github along with Docker for continuous deployments
 
