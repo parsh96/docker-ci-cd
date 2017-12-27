@@ -167,7 +167,7 @@ The commands we discussed above can be put into an atuomated build of a CI/CD to
 	> + Ensure that the user ```user``` has access to the repositories of user ```RepoOwner```.
 	> 
 	> + The ```twitter-app-ci-cd``` repository should exist in advance for the user ```RepoOwner``` 
-	 
+	>
 	> + ```dtr.example.com:12443``` is the url for the Docker Trusted Registery(DTR)
 
 ### Service Update
@@ -177,7 +177,7 @@ The commands we discussed above can be put into an atuomated build of a CI/CD to
 		docker service update --force --update-parallelism 1 --update-delay 30s --image dtr.example.com:12443/RepoOwner/twitter-app-ci-cd:$GIT_COMMIT tweet-to-us 
 
 	> + The option ```--update-parallelism 1``` helps to update one instance of the container at a time. This is specially helpful when you are running your service in replicated mode with replicas of the same container. That way you won't notice a downtime for your service as upgrade will be rolled to all containers one by one. 
-
+	>
 	> + The option ```--update-delay``` helps you to have a delay in between the update of containers. This would phase-wise rollout of features wherein one of the underlying containers/tasks could be using old code and another one would be using new code. This (if you keep the delay long enough) can help in doing blue-green deployment to test the new code without impacting all the users.
 
 
