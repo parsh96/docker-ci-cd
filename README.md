@@ -1,5 +1,5 @@
 # Using UCP HRM for rolling upgrade
-This post demonstrates how you can use Docker Enterprise Edition for CI/CD and rolling upgrade. The post uses a simple html file and nginx image to explain and demonstrate how you can
+This post demonstrates how you can use Docker Enterprise Edition for CI/CD and rolling upgrade. The post uses a simple html file and Nginx image to explain and demonstrate how you can
    
   *	Use HTTP Routing Mesh (HRM) feature of UCP
   *	Use HRM for rolling upgrade
@@ -7,11 +7,11 @@ This post demonstrates how you can use Docker Enterprise Edition for CI/CD and r
 
 The commands provided here are for example purpose but most of them can also be used in a sandbox environment for testing purpose. Pre-requisite for the examples to work fine- 
 
-  *  You have a full fledged Docker Enterprise Edition deployment with Universal Control Plane (UCP) cluster setup.
-  *  You have a Docker Trusted Register (DTR) setup for the UCP cluster.
+  *  You have a full-fledged Docker Enterprise Edition deployment with Universal Control Plane (UCP) cluster setup.
+  *  You have a Docker Trusted Registry (DTR) setup for the UCP cluster.
   *  You have HRM enabled in the UCP cluster with neccessary setup of application load-balancer and DNS configuration.
 
-In case you have challenges setting up Docker Enterprise Edition, UCP, DTR or HRM, you can contact Ashnik team to get a quickstart package for getting started on Docker Enterprise Edition.
+In case you have challenges setting up Docker Enterprise Edition, UCP, DTR or HRM, you can contact Ashnik team to get a quick-start package for getting started on Docker Enterprise Edition.
 
 # Swarm Routing Mesh
 Before starting let's take a while to understand the basics of networking in a Docker Swarm Cluster. Before we get into HRM, let's take a look at Swarm Routing Mesh which uses an ingress network to expose a container port on all the members of the swarm cluster. A schematic diagram of Swarm Routing Mesh is depicted in the below diagram
