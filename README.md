@@ -42,15 +42,15 @@ You can follow the online Docker documentation to understand [how to download Cl
 
   * Use ```docker image build``` command to build an image using the latest code from code repoistory
 
-
 		docker image build -t $dtr-url/$dtr-RepoOwner/tweet-to-us:docker-ucp-hrm-b1 .
+		
   * Use ```docker push``` command to push an image to DTR
 
-		docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
+    		docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
 	
-	> The ```twitter-app-ci-cd``` repository should exist in advance
-	> The ```$dtr-url``` is the URL which points to DTR
-	> ```$dtr-RepoOwner```` under whom the repostiory twitter-app-ci-cd been placed  
+		> + The ```twitter-app-ci-cd``` repository should exist in advance
+		> + The ```$dtr-url``` is the URL which points to DTR
+		> + ```$dtr-RepoOwner``` under whom the repostiory twitter-app-ci-cd been placed  
 
 
 ### Login if needed
