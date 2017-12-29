@@ -48,9 +48,9 @@ You can follow the online Docker documentation to understand [how to download Cl
 
     		docker push $dtr-url/$dtr-user/tweet-to-us:docker-ucp-hrm-b1
 	
-		> + The ```twitter-app-ci-cd``` repository should exist in advance
-		> + The ```$dtr-url``` is the URL which points to DTR
-		> + ```$dtr-RepoOwner``` under whom the repostiory twitter-app-ci-cd been placed  
+	> + The ```twitter-app-ci-cd``` repository should exist in advance
+	> + The ```$dtr-url``` is the URL which points to DTR
+	> + ```$dtr-RepoOwner``` under whom the repostiory twitter-app-ci-cd been placed  
 
 
 ### Login if needed
