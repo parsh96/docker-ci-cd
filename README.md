@@ -11,8 +11,6 @@ The commands provided here are for example purpose but most of them can also be 
   *  You have a Docker Trusted Registry (DTR) setup for the UCP cluster.
   *  You have HRM enabled in the UCP cluster with neccessary setup of application load-balancer and DNS configuration.
 
-In case you have challenges setting up Docker Enterprise Edition, UCP, DTR or HRM, you can contact Ashnik team to get a quick-start package for getting started on Docker Enterprise Edition.
-
 # Swarm Routing Mesh
 Before starting let's take a while to understand the basics of networking in a Docker Swarm Cluster. Before we get into HRM, let's take a look at Swarm Routing Mesh which uses an ingress network to expose a container port on all the members of the swarm cluster. A schematic diagram of Swarm Routing Mesh is depicted in the below diagram
 </br> 
