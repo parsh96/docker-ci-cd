@@ -69,8 +69,9 @@ Ideally you should not be required to login when you are using UCP Client Bundle
 
 Once you have pushed the image to the repository you can use the image for deployment on a UCP cluster.
 
+```
 	docker service create --network ucp-hrm --name tweet-to-us --mode replicated --replicas 2 --label com.docker.ucp.mesh.http.80="external_route=http://tweet.app.example.com/,internal_port=80" --constraint 'node.platform.os==linux' dtr.example.com:12443/RepoOwner/tweet-to-us-hrm:b1
-
+```
 
 You can also do deployments from from the UCP portal/GUI. When you do a deployment from GUI, you can still provide the HRM configuration label. IN order to do so, make sure that you go to Environment Tab and enter the Label
 
@@ -80,6 +81,25 @@ You can also do deployments from from the UCP portal/GUI. When you do a deployme
 
 
 To deploy on UCP cluster, you will require UCP Client Bundle and the user in the Client Bundle should have access to the repository where you have pushed the image.
+
+
+### Running with Docker EE 2.0 (Interlock)
+If you are running latest version of UCP, you would be using interlock. Here is a command that might help you get start
+```
+docker service create --network ucp-interlock --name tweet-to-us --mode replicated \
+        --replicas 2 \
+        --label com.docker.lb.hosts="tweet.apps.example.com" \
+        --label com.docker.lb.network="ucp-interlock" \
+        --label com.docker.lb.port="80" \
+        --constraint 'node.platform.os==linux' \
+        --detach=true \
+        $dtr_url/development/tweet-to-us:b1
+```
+
+Note that the labels have changed. So if you are using UCP portal, you need to use below label:
+```com.docker.lb.hosts``` for providing the hostname by which the service will be accesed. ```com.docker.lb.network``` for the network on which is used by interlock proxy service. ```com.docker.lb.port``` is the port on which the containers that belong to your service would be listening.
+
+
 
 ### Make a change and roll to production 
 
