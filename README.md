@@ -123,6 +123,7 @@ This time you would see a different message as per your edit in ```index.html```
 
 ### Rollback
 
+
 There could be a case when the changes you have made to code does not work very well after publishing to production, testing or integration environment. Docker service provides an easy way of rollbacking the previous change made by using ```docker service update``` comamnd
 
 	docker service update --rollback   tweet-to-us
