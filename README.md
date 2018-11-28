@@ -219,3 +219,7 @@ The example we saw here could be implemented for test environments to roll out n
   * For the purpose of demonstration I have used Jenkins but you can also use any other CI tool or build and deployment tool.
   * For the purpose of demo I have used HRM (and also becuase I found it easy to use) but you can also use other proxy feature/tool on top of Docker setup e.g. interlock. Alternatively you can also publish your service directly on a port using the port mapping. In that case you need to ensure firewall setting if the service is going to be consumed externally (outside the Docker network).
   * Or hey, build something of your own e.g. You can also use S3 bucket to host the code and use a Lambda function to invoke CI pipeline using rest service offered by your CI tool to perform a build and push the image to your public repository on DockerHub which can be consumed by your end users when they need it.
+  
+  
+  # To do
+   * Add Kubernetes based deployment example
