@@ -13,6 +13,7 @@ The commands provided here are for example purpose but most of them can also be 
   *  You have HRM enabled in the UCP cluster with neccessary setup of application load-balancer and DNS configuration.
 
 # Swarm Routing Mesh
+
 Before starting let's take a while to understand the basics of networking in a Docker Swarm Cluster. Before we get into HRM, let's take a look at Swarm Routing Mesh which uses an ingress network to expose a container port on all the members of the swarm cluster. A schematic diagram of Swarm Routing Mesh is depicted in the below diagram
 </br> 
 <img src="https://github.com/sameerkasi200x/docker-ci-cd/blob/master/swarm-routing-mesh.png?raw=true" alt="Swarm Routing Mesh" width="600" />
