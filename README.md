@@ -1,4 +1,5 @@
 # Using UCP Layer 7 Routing for rolling upgrade
+
 This post demonstrates how you can use Docker Enterprise Edition for CI/CD and rolling upgrade. The post uses a simple html file and Nginx image to explain and demonstrate how you can
    
    
